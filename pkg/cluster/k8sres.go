@@ -2241,6 +2241,9 @@ func (c *Cluster) generateConnectionPoolerPodTemplate(spec *acidv1.PostgresSpec)
 			ServiceAccountName:            c.OpConfig.PodServiceAccountName,
 			TerminationGracePeriodSeconds: &gracePeriod,
 			Containers:                    []v1.Container{poolerContainer},
+			Affinity: &v1.Affinity{
+				NodeAffinity: &spec.ConnectionPooler.NodeAffinity,
+			},
 			// TODO: add tolerations to scheduler pooler on the same node
 			// as database
 			//Tolerations:                   *tolerationsSpec,
